@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -16,13 +17,15 @@ public class Mixer : MonoBehaviour
 
     private Renderer _liquidRenderer;
     
+    public Transform JumpOnPlace() => _lidOnPlace;
+    
     void Start()
     {
         _liquidRenderer = _liquid.GetComponent<Renderer>();
         _liquidRenderer.material.SetFloat("_Fill", 0);
         
-        StartMixer(_shakeDuration);
-        TakeLidOff();
+        //StartMixer(_shakeDuration);
+        //TakeLidOff();
     }
     
     void Update()
@@ -30,15 +33,21 @@ public class Mixer : MonoBehaviour
         
     }
 
-    private void StartMixer(float duration)
+    public async void StartMixer(float duration)
     {
+        await TakeLidOff().AsyncWaitForCompletion();
+        await TakeLidOn().AsyncWaitForCompletion();
+        
+        
+        FillMixer(duration);
         transform.DOShakeRotation(duration, _shakeStrength);
-        FillMixe(duration);
         
     }
 
-    private async void FillMixe(float time)
+    private async void FillMixer(float time)
     {
+        
+        
         float timer = 0f;
         while (timer < time/2)
         {
@@ -48,9 +57,14 @@ public class Mixer : MonoBehaviour
         }
     }
 
-    private void TakeLidOff()
+    public Sequence TakeLidOff()
     {
-        _cupLid.transform.DOJump(_lidOffPlace.position,0.3f,1,1f);
+        return _cupLid.transform.DOJump(_lidOffPlace.position, 0.3f, 1, 1f);
+    }
+    
+    public Sequence TakeLidOn()
+    {
+        return _cupLid.transform.DOJump(_lidOnPlace.position, 0.3f, 1, 1f);
     }
     
 }
