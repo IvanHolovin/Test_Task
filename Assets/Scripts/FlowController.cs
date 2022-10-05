@@ -11,9 +11,10 @@ public class FlowController : MonoBehaviour
     [SerializeField] private Mixer _mixer;
     [SerializeField] private VegetableSpawner _vegetableSpawner;
     private VegetableJumper _jumper;
-    //private int _i = 0;
+    private int _i = 0;
     private List<Sequence> _queue = new List<Sequence>();
     private bool isOpenLid = false;
+    
 
 
     void Start()
@@ -31,40 +32,40 @@ public class FlowController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            _queue.Add(Jump());
+            
+            PutInVegetable(Jump(_vegetableSpawner.GetVegetableFromPool(VegetableType.apple)));
+            _i++;
         }
 
-        if (_queue.Count > 0)
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            PutInVegetable();
+            
         }
+        
         
     }
 
-    private async void PutInVegetable()
+    private async void PutInVegetable(Sequence task)
     {
         if (!isOpenLid)
         {
+            _mixer.StopLid();
             isOpenLid = true;
             await _mixer.TakeLidOff().AsyncWaitForCompletion();
         }
         
-        foreach (var task in _queue)
-        {
-            await task.AsyncWaitForCompletion();
-            _queue.Remove(task);
-        }
+        await task.AsyncWaitForCompletion();
+        await Task.Delay(1000);
         
         if (isOpenLid)
         {
             isOpenLid = false;
             await _mixer.TakeLidOn().AsyncWaitForCompletion();
-            
         }
     }
-    private Sequence Jump()
+    private Sequence Jump(Vegetable vegetable)
     {
-        return _jumper.JumpVegetableInMixer(_vegetableSpawner.objectPool[0], _mixer.JumpOnPlace());
+        return _jumper.JumpVegetableInMixer(vegetable, _mixer.JumpOnPlace());
     }
     
 }

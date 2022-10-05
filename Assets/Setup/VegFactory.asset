@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68b0703432144a8283ad615636f21519, type: 3}
   m_Name: VegFactory
   m_EditorClassIdentifier: 
-  _tomato: {fileID: 0}
+  _tomato: {fileID: 6020805057147290556, guid: bf64d11680f1f467dbcca5d56d6616b1, type: 3}
   _celera: {fileID: 4993541088589942953, guid: 73bd4d447a59b4db5be2425a16125c16, type: 3}
   _orange: {fileID: 473504126688155788, guid: 842259d2341974d9bb1f059959e6647d, type: 3}
   _cherry: {fileID: 6489560663366196695, guid: 3bfa0000971d746939281c246acb396f, type: 3}
-  _apple: {fileID: -4330215763581594491, guid: 5773e77a485564fe39dda17ab3e94614, type: 3}
+  _apple: {fileID: 6364936650547891287, guid: e98bb66adbec24360aa3919743f61773, type: 3}
   _eggplant: {fileID: -1013785109705697390, guid: 367807ab9dbb84018856e01a4f872ed5,
     type: 3}
   _banana: {fileID: -4661135163429450968, guid: 634af30d88e1246228e84f310e1ee292,

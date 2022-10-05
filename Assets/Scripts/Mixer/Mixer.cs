@@ -23,9 +23,6 @@ public class Mixer : MonoBehaviour
     {
         _liquidRenderer = _liquid.GetComponent<Renderer>();
         _liquidRenderer.material.SetFloat("_Fill", 0);
-        
-        //StartMixer(_shakeDuration);
-        //TakeLidOff();
     }
     
     void Update()
@@ -33,21 +30,14 @@ public class Mixer : MonoBehaviour
         
     }
 
-    public async void StartMixer(float duration)
+    public void StartMixer(float duration)
     {
-        await TakeLidOff().AsyncWaitForCompletion();
-        await TakeLidOn().AsyncWaitForCompletion();
-        
-        
         FillMixer(duration);
         transform.DOShakeRotation(duration, _shakeStrength);
-        
     }
 
     private async void FillMixer(float time)
     {
-        
-        
         float timer = 0f;
         while (timer < time/2)
         {
@@ -60,6 +50,11 @@ public class Mixer : MonoBehaviour
     public Sequence TakeLidOff()
     {
         return _cupLid.transform.DOJump(_lidOffPlace.position, 0.3f, 1, 1f);
+    }
+
+    public void StopLid()
+    {
+        _cupLid.transform.DOKill();
     }
     
     public Sequence TakeLidOn()
