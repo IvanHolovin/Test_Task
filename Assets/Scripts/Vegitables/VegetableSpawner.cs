@@ -13,67 +13,68 @@ namespace DefaultNamespace.Vegitables
 
         private Dictionary<VegetableType, List<Vegetable>> _wholePool = new Dictionary<VegetableType, List<Vegetable>>();
 
-        public List<Vegetable> objectPool;
+        private List<Vegetable> _objectPool = new List<Vegetable>();
         
         [SerializeField] private LevelData CurrLevel;
+        
 
         private void Start()
         {
-            SpawnVegetables(CurrLevel);
+            //SpawnVegetables(CurrLevel);
         }
+        
 
-        private void SpawnVegetables(LevelData levelToSpawn)
+        public void SpawnVegetables(LevelData levelToSpawn)
         {
+            CurrLevel = levelToSpawn;
             for (int i = 0; i < Mathf.Min(_spawnSpots.Count,levelToSpawn.VegetablesToSpawn().Count); i++)
             {
-                
-                    List<Vegetable> newList = new List<Vegetable>();
-                    _wholePool.Add(levelToSpawn.VegetablesToSpawn()[i], newList);
-                    for (int j = 0; j < _objectPoolCapacity; j++)
-                    {
-                        Vegetable vegetable = _factory.Get(levelToSpawn.VegetablesToSpawn()[i]);
-                        vegetable.transform.localPosition = _spawnSpots[i].position;
-                        vegetable.transform.SetParent(_spawnSpots[i]);
-                        if(j != 0)
-                            vegetable.gameObject.SetActive(false);
-                        newList.Add(vegetable);
-                    }
-            
+                List<Vegetable> newList = new List<Vegetable>();
+                _wholePool.Add(levelToSpawn.VegetablesToSpawn()[i], newList);
+                for (int j = 0; j < _objectPoolCapacity; j++)
+                {
+                    Vegetable vegetable = _factory.Get(levelToSpawn.VegetablesToSpawn()[i]);
+                    vegetable.transform.localPosition = _spawnSpots[i].position;
+                    vegetable.transform.SetParent(_spawnSpots[i]);
+                    if(j != 0)
+                        vegetable.gameObject.SetActive(false);
+                    newList.Add(vegetable);
+                    _objectPool.Add(vegetable);
+                }
             }
-            
-            ClearSpawner();
-
-            
         }
 
-        public Vegetable GetVegetableFromPool(VegetableType type)
+        public void GetVegetableFromPool(VegetableType type)
         {
             List<Vegetable> list = _wholePool[type];
-            if (list.Count == 0) return null;
+            if (list.Count == 0) return;
             Vegetable newVegetable = list[0];
             list.Remove(newVegetable);
             if (list.Count != 0)
                 SetActiveNextVegetable(list[0]);
-            return newVegetable;
+            //return newVegetable;
         }
 
-        public async void SetActiveNextVegetable(Vegetable vegetable)
+        private async void SetActiveNextVegetable(Vegetable vegetable)
         {
             await Task.Delay(500);
             vegetable.gameObject.SetActive(true);
         }
         
-        private void ClearSpawner()
+        public void NextLevel(LevelData nextLevel)
         {
-            
+            SpawnVegetables(nextLevel);
         }
 
-        public Vegetable bsddfGetVegetableFromPool(List<Vegetable> list)
+        public void RestartLevel()
         {
-            Vegetable newVegetable = list[list.Count - 1];
-            list.Remove(newVegetable);
-            list[list.Count - 1].gameObject.SetActive(true);
-            return newVegetable;
+            foreach (var vegetable in _objectPool)
+            {
+                Destroy(vegetable.gameObject);
+            }
+            _objectPool.Clear();
+            _wholePool.Clear();
+            SpawnVegetables(CurrLevel);
         }
         
     }

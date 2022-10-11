@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6d24d5ed3194ed6b8533c6536146ce6, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: 
-  _vegetablesToSpawn: 0400000006000000
-  _colorResult: {r: 0.72750676, g: 1, b: 0, a: 0}
+  _vegetablesToSpawn: 040000000600000005000000
+  _colorResult: {r: 0.33333334, g: 1, b: 0, a: 1}

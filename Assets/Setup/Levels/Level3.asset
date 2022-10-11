@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Level3
   m_EditorClassIdentifier: 
   _vegetablesToSpawn: 010000000000000005000000
-  _colorResult: {r: 0, g: 0, b: 0, a: 0}
+  _colorResult: {r: 0.54024184, g: 0, b: 0.6320754, a: 1}

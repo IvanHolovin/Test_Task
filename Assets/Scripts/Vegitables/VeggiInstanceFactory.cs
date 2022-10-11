@@ -18,13 +18,13 @@ namespace DefaultNamespace.Vegitables
         {
             return type switch
             {
-                VegetableType.tomato => Get(_tomato),
-                VegetableType.celera => Get(_celera),
-                VegetableType.orange => Get(_orange),
-                VegetableType.cherry => Get(_cherry),
-                VegetableType.apple => Get(_apple),
-                VegetableType.eggplant => Get(_eggplant),
-                VegetableType.banana => Get(_banana)
+                VegetableType.Tomato => Get(_tomato),
+                VegetableType.Celera => Get(_celera),
+                VegetableType.Orange => Get(_orange),
+                VegetableType.Cherry => Get(_cherry),
+                VegetableType.Apple => Get(_apple),
+                VegetableType.Eggplant => Get(_eggplant),
+                VegetableType.Banana => Get(_banana)
             };
         }
         

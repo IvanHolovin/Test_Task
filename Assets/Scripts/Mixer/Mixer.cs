@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,24 +17,27 @@ public class Mixer : MonoBehaviour
     [SerializeField] private Transform _lidOffPlace;
 
     private Renderer _liquidRenderer;
-    
+    private string _rendererFill = "_Fill";
+    private string _rendererColor = "_Color";
+
     public Transform JumpOnPlace() => _lidOnPlace;
     
-    void Start()
+    
+    void Awake()
     {
         _liquidRenderer = _liquid.GetComponent<Renderer>();
-        _liquidRenderer.material.SetFloat("_Fill", 0);
-    }
-    
-    void Update()
-    {
-        
+        _liquidRenderer.material.SetFloat(_rendererFill, 0);
     }
 
-    public void StartMixer(float duration)
+    private void OnTriggerEnter(Collider other)
     {
-        FillMixer(duration);
-        transform.DOShakeRotation(duration, _shakeStrength);
+        transform.DOShakeRotation(0.5f, 3f);
+    }
+
+    public void StartMixer()
+    {
+        FillMixer(_shakeDuration);
+        transform.DOShakeRotation(_shakeDuration, _shakeStrength);
     }
 
     private async void FillMixer(float time)
@@ -42,24 +46,29 @@ public class Mixer : MonoBehaviour
         while (timer < time/2)
         {
             timer += Time.deltaTime;
-            _liquidRenderer.material.SetFloat("_Fill", _liquidMaxValue * 2*timer/time);
+            _liquidRenderer.material.SetFloat(_rendererFill, _liquidMaxValue * 2*timer/time);
             await Task.Yield();
         }
-    }
-
-    public Sequence TakeLidOff()
-    {
-        return _cupLid.transform.DOJump(_lidOffPlace.position, 0.3f, 1, 1f);
-    }
-
-    public void StopLid()
-    {
-        _cupLid.transform.DOKill();
+        Debug.Log("changeState");
+        FlowController.Instance.GameStateUpdater(GameState.EndRound);
     }
     
-    public Sequence TakeLidOn()
+    public void TakeOffLid()
     {
-        return _cupLid.transform.DOJump(_lidOnPlace.position, 0.3f, 1, 1f);
+        _cupLid.transform.DOKill();
+        _cupLid.transform.DOJump(_lidOffPlace.position, 0.3f, 1, 1f)
+            .OnComplete(() => _cupLid.transform.DOJump(_lidOnPlace.position, 0.3f, 1, 1f).OnComplete(() => FlowController.Instance.GameStateUpdater(GameState.Idle)));
+    }
+
+    public void ResetMixer()
+    {
+        _liquidRenderer.material.SetFloat(_rendererFill, 0);
+        _liquidRenderer.material.SetColor(_rendererColor,new Color(0f,0f,0f,0f));
+    }
+
+    public void SetLiquidColor(Color color)
+    {
+        _liquidRenderer.material.SetColor(_rendererColor, color);
     }
     
 }

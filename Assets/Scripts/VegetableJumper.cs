@@ -7,9 +7,19 @@ namespace DefaultNamespace
     public class VegetableJumper : MonoBehaviour
     {
         
-        public Sequence JumpVegetableInMixer(Vegetable vegetable,Transform jumpLocation)
+        public void JumpVegetableInMixer(Vegetable vegetable,Transform jumpLocation)
         {
-            return vegetable.transform.DOJump(jumpLocation.position, 0.3f, 1, 1f);
+            if (vegetable.VegetableType() == VegetableType.Banana)
+            {
+                vegetable.transform.DOScale(new Vector3(0.3f,0.3f,0.3f),0.5f).SetEase(Ease.Linear);
+                vegetable.transform.DORotate(new Vector3(50f, 0f, 0f), 0.5f).SetEase(Ease.Linear);
+            }
+            else
+            {
+                vegetable.transform.DOScale(new Vector3(0.5f,0.5f,0.5f),0.5f);
+            }
+            vegetable.GetComponent<Rigidbody>().isKinematic = false;
+            vegetable.transform.DOJump(jumpLocation.position, 0.3f, 1, 1f).SetEase(Ease.Linear);
         }
     }
 }

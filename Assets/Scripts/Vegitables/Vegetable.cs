@@ -4,13 +4,13 @@ namespace DefaultNamespace.Vegitables
 {
     public enum VegetableType
     {
-        tomato,
-        celera,
-        orange,
-        cherry,
-        apple,
-        eggplant,
-        banana
+        Tomato,
+        Celera,
+        Orange,
+        Cherry,
+        Apple,
+        Eggplant,
+        Banana
     }
     public class Vegetable : MonoBehaviour
     {
@@ -19,6 +19,7 @@ namespace DefaultNamespace.Vegitables
 
         public Color Color() => _color;
         public VegetableType VegetableType() => _vegetableType;
+        
 
     }
 }
