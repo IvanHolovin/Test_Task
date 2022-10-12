@@ -26,6 +26,7 @@ namespace DefaultNamespace.Vegitables
 
         public void SpawnVegetables(LevelData levelToSpawn)
         {
+            RestartLevel();
             CurrLevel = levelToSpawn;
             for (int i = 0; i < Mathf.Min(_spawnSpots.Count,levelToSpawn.VegetablesToSpawn().Count); i++)
             {
@@ -74,7 +75,6 @@ namespace DefaultNamespace.Vegitables
             }
             _objectPool.Clear();
             _wholePool.Clear();
-            SpawnVegetables(CurrLevel);
         }
         
     }

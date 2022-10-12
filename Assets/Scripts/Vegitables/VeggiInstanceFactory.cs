@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DefaultNamespace.Vegitables
 {
-    [CreateAssetMenu(fileName = "New Factory", menuName = "VegFactory")]
+    [CreateAssetMenu(fileName = "New Factory", menuName = "Factory/VegFactory")]
     public class VeggiInstanceFactory : InstanceFactory
     {
         [SerializeField] private Vegetable _tomato;
@@ -18,21 +18,14 @@ namespace DefaultNamespace.Vegitables
         {
             return type switch
             {
-                VegetableType.Tomato => Get(_tomato),
-                VegetableType.Celera => Get(_celera),
-                VegetableType.Orange => Get(_orange),
-                VegetableType.Cherry => Get(_cherry),
-                VegetableType.Apple => Get(_apple),
-                VegetableType.Eggplant => Get(_eggplant),
-                VegetableType.Banana => Get(_banana)
+                VegetableType.Tomato => GetInstance(_tomato),
+                VegetableType.Celera => GetInstance(_celera),
+                VegetableType.Orange => GetInstance(_orange),
+                VegetableType.Cherry => GetInstance(_cherry),
+                VegetableType.Apple => GetInstance(_apple),
+                VegetableType.Eggplant => GetInstance(_eggplant),
+                VegetableType.Banana => GetInstance(_banana)
             };
         }
-        
-        private Vegetable Get(Vegetable prefab)
-        {
-            Vegetable instance = GetInstance(prefab);
-            return instance;
-        }
-        
     }
 }
