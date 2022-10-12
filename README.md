@@ -1,6 +1,6 @@
 # Test_Task
 
-Game where you have to mix fruits and vegetables to get color rusult as asked by customer, you need at least 85% 
+Game where you have to mix fruits and vegetables to get color result as asked by customer, you need at least 85% 
 
 Gameplay: throwing fruits at mixer, then mix them and get result
 
@@ -9,7 +9,7 @@ On the table you can add up to 4 different vegetables/fruits. On reset it spawn 
 As asked rounds obsessed, and customers after first spawn setted to customer pool and shown by request.
 _________________________________________________________________________________________________
 
-Гра, де вам потрібно змішати фрукти та овочі, щоб отримати колір rusult відповідно до запитів клієнта, вам потрібно принаймні 85%
+Гра, де вам потрібно змішати фрукти та овочі, щоб отримати результат кольору за запитом клієнта, вам потрібно принаймні 85%
 
 Хід гри: кидайте фрукти в міксер, потім перемішуйте їх і отримуйте результат
 
